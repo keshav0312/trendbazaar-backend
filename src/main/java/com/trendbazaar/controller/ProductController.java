@@ -6,18 +6,20 @@ import com.trendbazaar.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1.0/products")
+@RequestMapping("/api/v1.0/products")
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto)
     {
         ProductDto productDto1 = productService.create(productDto);
